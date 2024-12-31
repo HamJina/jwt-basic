@@ -1,0 +1,18 @@
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/practice?useSSL=false&serverTimezone=UTC
+    username: "root"
+    password: "root"
+
+  jpa:
+    hibernate:
+      ddl-auto: update # create, update, or none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+jwt:
+  secret-key: "vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb"
+  expiration: 3600000 # 토큰 만료 시간 (1시간 = 3600000ms)
