@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+//jwt검증필터
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;

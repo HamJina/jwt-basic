@@ -26,6 +26,7 @@ public class SecurityConfig {
 
     //AuthenticationManager가 인자로 받을 AuthenticationConfiguration 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
+
     //JWTUtil주입
     private final JWTUtil jwtUtil;
 
@@ -45,6 +46,7 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean //인가 작업, 로그인 방식 설정, 세션 설정
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -90,7 +92,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
-        //jwt방식에서는 세션을 stateless상태로 관리 (중요!!!!)
+        //jwt방식에서는 세션을 stateless상태(무상태)로 관리 (중요!!!!)
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

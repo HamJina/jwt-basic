@@ -11,14 +11,18 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
+    //jwt검증과 생성하는 메소드
 
     private SecretKey secretKey;
 
+    //생성자가 호출이 될때 secret key가져오기
     public JWTUtil(@Value("${jwt.secret-key}")String secret) {
+        //객체타입으로 저장하기
         secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
     public String getUsername(String token) {
+
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
     }
 

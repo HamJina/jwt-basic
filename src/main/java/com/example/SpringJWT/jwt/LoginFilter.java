@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -22,7 +21,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     //의존성 주입
     private final AuthenticationManager authenticationManager;
 
-    //JWTUtil주입
+    //JWTUtil주입(여러가지 메소드를 사용하기 위함)
     private final JWTUtil jwtUtil;
 
     public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
@@ -50,12 +49,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         //UserDetailsS
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        //username뽑아내기
         String username = customUserDetails.getUsername();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
 
+        //role값 뽑아내기
         String role = auth.getAuthority();
 
         String token = jwtUtil.createJwt(username, role, 60*60*10L);
